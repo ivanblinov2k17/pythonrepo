@@ -47,10 +47,10 @@ def golden_section_min(l, r, f):
             return golden_section_min(l, x2, f)
 
 
-a0 = random.random() * 3
-b0 = random.random() * 3
-g1 = random.random()
-g2 = math.sqrt(1 - g1 ** 2)
+a0 = 0.6787527143921632
+b0 = 1.7466293115892506
+g1 = 0.6745619858238852
+g2 = 0.7382182111553037
 eps = 10 ** -6
 delta = random.uniform(0, 2 * eps)
 print(a0, b0, g1, g2, eps, delta)
