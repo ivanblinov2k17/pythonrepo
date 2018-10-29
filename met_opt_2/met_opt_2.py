@@ -26,7 +26,7 @@ def lomanyh(f, L, _x, p):
             temp = i[1]
     print(t)
     s1.remove(t)
-    lomanyh(f, L, t[0], t[1])
+    return lomanyh(f, L, t[0], t[1])
 
 
 def f1(phi):
@@ -42,6 +42,17 @@ def f2(phi):
         ans.append(abs((a0+phi*g1)*x[i]+(b0+phi*g2)-y[i]))
     return max(ans)
 
+
+def f_1(_x):
+    return derivative(f1, _x, 10**-6)
+
+
+def newton(f, _x):
+    x1 = _x - f_1(_x)/(derivative(f_1, _x, 10**-6))
+    print(_x, f_1(_x)/(derivative(f_1, _x, 10**-6)))
+    if abs(f_1(_x)/(derivative(f_1, _x, 10**-6))) < eps:
+        return _x
+    return newton(f, x1)
 
 a0 = 0.6787527143921632
 b0 = 1.7466293115892506
@@ -63,5 +74,6 @@ ylist = [f2(x) for x in xlist]
 pylab.plot(xlist, ylist)
 x_start = (1/(2*l2))*(f2(a)-f2(b)+l2*(a+b))
 p_start = (1/2)*(f2(a)+f2(b)+l2*(a-b))
-print(lomanyh(f2, l2, x_start, p_start))
+#print(lomanyh(f2, l2, x_start, p_start))
+print(newton(f1, 0))
 pylab.show()
