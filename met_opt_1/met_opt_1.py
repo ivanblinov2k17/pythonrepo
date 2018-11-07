@@ -24,7 +24,7 @@ def dichotomia_min(l, r, f):
     r_value = f(current_pos + delta)
     print('dich', l, r, (r-l)/2, current_pos-delta, current_pos+delta, f(current_pos-delta), f(current_pos+delta))
     if r - l < 2 * eps:
-        return f(current_pos)
+        return current_pos
     if l_value < r_value:
         return dichotomia_min(l, current_pos + delta, f)
     else:
@@ -34,12 +34,11 @@ def dichotomia_min(l, r, f):
 def golden_section_min(l, r, f):
     x1 = r - (r-l)/ph
     x2 = l + (r-l)/ph
-    eps = 10 ** -6
     l_value = f(x1)
     r_value = f(x2)
     print('gold', l, r, (r-l)/2, x1, x2, f(x1), f(x2))
     if (r-l) < 2 * eps:
-        return f((r+l)/2)
+        return (r+l)/2
     else:
         if l_value >= r_value:
             return golden_section_min(x1, r, f)
