@@ -1,7 +1,7 @@
 from socket import *
 
-host = 'localhost'
-port = 777
+host = '192.168.1.39'
+port = 8081
 addr = (host, port)
 
 tcp_socket = socket(AF_INET, SOCK_STREAM)
@@ -14,6 +14,6 @@ while True:
     print('waiting data...')
     data = conn.recv(1024)
     print(data.decode())
-    conn.send('Message is received'.encode())
+    conn.send('Message is received\n'.encode())
 
 tcp_socket.close()
