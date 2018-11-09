@@ -82,11 +82,11 @@ def poly2str(arr):
                     if arr[i] > 0:
                         s += '+' + str(arr[i]) + 'x'
                     else:
-                        s += '-' + str(arr[i]) + 'x'
+                        s += str(arr[i]) + 'x'
                 else:
                     if arr[i] > 0:
                         s += '+' + str(arr[i]) + 'x^' + str(i)
                     else:
-                        s += '-' + str(arr[i]) + 'x^' + str(i)
+                        s += str(arr[i]) + 'x^' + str(i)
 
     return s
