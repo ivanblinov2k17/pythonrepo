@@ -28,7 +28,7 @@ def longest_window(transactions):
         while i < len(transactions) \
                 and transactions[i][0] - transactions[t][0] < second - zero:
             i += 1
-        k.append([t, i-1])
+        k.append([t, i])
         t = i
     window_len = 0
     window_start = 0
@@ -66,7 +66,8 @@ def dividing_transactions_by_market(transactions, market):
     for transaction in transactions:
         if transaction[3] == market:
             transactions_by_market.append(transaction)
-
+    #for t in transactions_by_market:
+        #print(t)
     return transactions_by_market
 
 
