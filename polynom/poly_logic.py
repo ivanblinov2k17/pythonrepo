@@ -28,6 +28,8 @@ def read_poly(_s):
                         i += 1
                 elif s[i+1] == '+' or s[i+1] == '-':
                     degree = 1
+            else:
+                degree = 0
         # формирование элемента
         if degree == '':
             degree = 1
