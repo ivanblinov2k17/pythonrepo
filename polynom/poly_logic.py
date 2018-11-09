@@ -41,7 +41,9 @@ def read_poly(_s):
         degree = ''
         coef = ''
         sign = 1
-        i += 1
+        if i < len(s):
+            if s[i] != '-':
+                i += 1
     return arr
 
 
@@ -58,8 +60,33 @@ def diff(_arr):
 
 def poly2str(arr):
     s = ''
+    t = 0
+    if len(arr) == 0:
+        s += '0'
+        return s
+    if len(arr) == 1:
+        s += str(arr[0])
+        return s
     for i in range(len(arr)-1, 0, -1):
-        if arr[i] != 0:
-            s += str(arr[i]) + 'x^' + str(i) + '+'
-    s += str(arr[0])
+        if t == 0:
+            if arr[i] != 0:
+                if i == 1:
+                    s += str(arr[i]) + 'x'
+                    t += 1
+                else:
+                    s += str(arr[i]) + 'x^' + str(i)
+                    t += 1
+        else:
+            if arr[i] != 0:
+                if i == 1:
+                    if arr[i] > 0:
+                        s += '+' + str(arr[i]) + 'x'
+                    else:
+                        s += '-' + str(arr[i]) + 'x'
+                else:
+                    if arr[i] > 0:
+                        s += '+' + str(arr[i]) + 'x^' + str(i)
+                    else:
+                        s += '-' + str(arr[i]) + 'x^' + str(i)
+
     return s
