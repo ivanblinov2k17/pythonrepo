@@ -32,6 +32,14 @@ class Tester(TestCase):
         self.assertEqual(poly2str(diff(read_poly('-1-x^9+x^10'))),
                          '10x^9-9x^8')
 
+    def test_true_poly_9(self):
+        self.assertEqual(poly2str(diff(read_poly('-x^9-1+x^10'))),
+                         '10x^9-9x^8')
+
+    def test_true_poly_10(self):
+        self.assertEqual(poly2str(diff(read_poly('-1-x^9+x^10-x'))),
+                         '10x^9-9x^8-1')
+
 
 if __name__ == '__main__':
     main()
