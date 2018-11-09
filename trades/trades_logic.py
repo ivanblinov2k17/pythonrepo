@@ -8,13 +8,15 @@ def initArr(name):
     trades_file = open(name, 'r')
     reader = csv.reader(trades_file)
     for trades_row in reader:
-        time, price, size, exchange = trades_row
-        if trades_row != ['Time', 'Proce', 'Size', 'Exchange']:
-            time = datetime.strptime(time, '%H:%M:%S.%f')
-            price = float(price)
-            size = int(size)
-            transactions.append([time, price, size, exchange])
-            market_list.add(exchange)
+        if trades_row != '' and trades_row != ' ' and \
+                trades_row != '\n':
+            time, price, size, exchange = trades_row
+            if trades_row != ['Time', 'Proce', 'Size', 'Exchange']:
+                time = datetime.strptime(time, '%H:%M:%S.%f')
+                price = float(price)
+                size = int(size)
+                transactions.append([time, price, size, exchange])
+                market_list.add(exchange)
     return transactions, market_list
 
 
@@ -40,7 +42,9 @@ def longest_window(transactions):
     max_sum = 0
     for i in range(max_start, max_start+max_len):
         max_sum += transactions[i][1]*transactions[i][2]
-    window_start_time = str(transactions[max_start][0].time())
+    window_start_time = 0
+    if len(transactions) > 0:
+        window_start_time = str(transactions[max_start][0].time())
     return max_start, max_len, max_sum, window_start_time
 
 def dividing_window_by_markets(transactions, market_list, window_start, window_len):
