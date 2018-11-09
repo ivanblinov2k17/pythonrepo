@@ -1,4 +1,4 @@
-def reading(_s):
+def read_poly(_s):
     s = '' + _s
     s = s.replace(' ', '')
     arr = []
@@ -47,6 +47,8 @@ def reading(_s):
 
 def diff(_arr):
     arr = _arr.copy()
+    if len(arr) == 1:
+        return [0]
     for i in range(1, len(arr)):
         arr[i-1] = i*arr[i]
         arr[i] = 0
@@ -54,8 +56,10 @@ def diff(_arr):
     return arr
 
 
-def print_poly(arr):
+def poly2str(arr):
+    s = ''
     for i in range(len(arr)-1, 0, -1):
-        if arr[i]!=0:
-            print(arr[i], 'x^', i,sep='', end='+')
-    print(arr[0])
+        if arr[i] != 0:
+            s += str(arr[i]) + 'x^' + str(i) + '+'
+    s += str(arr[0])
+    return s

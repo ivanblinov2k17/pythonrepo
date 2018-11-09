@@ -1,4 +1,6 @@
-import polynom.poly_logic as logic
-s = '21x^6 + 50x^4 - 8x'
-polynom = logic.reading(s)
-logic.print_poly(logic.diff(polynom))
+from polynom.poly_logic import read_poly
+from polynom.poly_logic import diff
+from polynom.poly_logic import poly2str
+s = '10x^4+10x^6+6x'
+polynom = read_poly(s)
+print(poly2str(diff(polynom)))
