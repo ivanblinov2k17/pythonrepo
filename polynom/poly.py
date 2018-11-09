@@ -1,7 +1,7 @@
 from polynom.poly_logic import read_poly
 from polynom.poly_logic import diff
 from polynom.poly_logic import poly2str
-s = '2x^6-x^2-x+1'
+s = '-x^5-x'
 polynom = read_poly(s)
 print(polynom)
 print(diff(polynom))

@@ -67,7 +67,7 @@ def poly2str(arr):
     if len(arr) == 1:
         s += str(arr[0])
         return s
-    for i in range(len(arr)-1, 0, -1):
+    for i in range(len(arr)-1, -1, -1):
         if t == 0:
             if arr[i] != 0:
                 if i == 1:
@@ -83,6 +83,11 @@ def poly2str(arr):
                         s += '+' + str(arr[i]) + 'x'
                     else:
                         s += str(arr[i]) + 'x'
+                elif i == 0 and arr[i] != 0:
+                    if arr[i] > 0:
+                        s += '+' + str(arr[i])
+                    else:
+                        s += str(arr[i])
                 else:
                     if arr[i] > 0:
                         s += '+' + str(arr[i]) + 'x^' + str(i)
