@@ -10,6 +10,7 @@ s1 = []
 
 
 def lomanyh(f, L, _x, p):
+    print("%.6f" % _x, "%.6f" % f(_x), "%.6f" % p, "%.6f" % (f(_x)-p))
     d = (1/(2*L))*(f(_x)-p)
     if 2*d*L < eps:
         return _x
@@ -24,7 +25,6 @@ def lomanyh(f, L, _x, p):
         if i[1] < temp:
             t = i
             temp = i[1]
-    print(t)
     s1.remove(t)
     return lomanyh(f, L, t[0], t[1])
 
@@ -48,11 +48,19 @@ def f_1(_x):
 
 
 def newton(f, _x):
+    print(_x, f(_x), f_1(_x))
     x1 = _x - f_1(_x)/(derivative(f_1, _x, 10**-6))
-    print(_x, f_1(_x)/(derivative(f_1, _x, 10**-6)))
     if abs(f_1(_x)/(derivative(f_1, _x, 10**-6))) < eps:
         return _x
     return newton(f, x1)
+
+
+def show_graf(f):
+    xlist = mlab.frange(a, b, 0.001)
+    ylist = [f(x) for x in xlist]
+    pylab.plot(xlist, ylist)
+    pylab.show()
+
 
 a0 = 0.6787527143921632
 b0 = 1.7466293115892506
@@ -64,16 +72,16 @@ print(a0, b0, g1, g2, eps, delta)
 x = [1, 2, 3, 4, 5]
 y = [-4, -5, -6, -7, -8]
 l1 = 1146.66066922115416
-l2 = 41.1102814027473
+l2 = 4.11102814027473
 a = -10
 b = 10
 ph = (1 + math.sqrt(5))/2
 
-xlist = mlab.frange(a, b, 0.001)
-ylist = [f2(x) for x in xlist]
-pylab.plot(xlist, ylist)
+show_graf(f1)
+show_graf(f2)
+
+
 x_start = (1/(2*l2))*(f2(a)-f2(b)+l2*(a+b))
 p_start = (1/2)*(f2(a)+f2(b)+l2*(a-b))
-#print(lomanyh(f2, l2, x_start, p_start))
 print(newton(f1, 0))
-pylab.show()
+print(lomanyh(f2, l2, x_start, p_start))

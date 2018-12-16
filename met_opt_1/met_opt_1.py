@@ -2,6 +2,8 @@ import random
 import math
 import pylab
 from matplotlib import mlab
+from scipy.optimize import minimize
+import numpy as np
 
 
 def f1(phi):
@@ -63,8 +65,11 @@ ylist = [f1(x) for x in xlist]
 pylab.plot(xlist, ylist)
 ylist = [f2(x) for x in xlist]
 pylab.plot(xlist, ylist)
-print(dichotomia_min(a, b, f1))
-print(dichotomia_min(a, b, f2))
+#print(dichotomia_min(a, b, f1))
+#print(dichotomia_min(a, b, f2))
 print(golden_section_min(a, b, f1))
 print(golden_section_min(a, b, f2))
+x0 = -1
+res = minimize(f1, x0)
+print(res.x)
 pylab.show()

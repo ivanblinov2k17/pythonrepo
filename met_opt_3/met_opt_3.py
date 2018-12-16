@@ -3,7 +3,8 @@ import math
 import pylab
 import numpy
 from mpl_toolkits.mplot3d import Axes3D
-from matplotlib import mlab
+from scipy.optimize import minimize
+
 
 a0 = 0.6787527143921632
 b0 = 1.7466293115892506
@@ -18,19 +19,6 @@ a = -10
 b = 10
 
 
-def dichotomia_min(l, r, f):
-    current_pos = (l+r)/2
-    l_value = f(current_pos - delta)
-    r_value = f(current_pos + delta)
-    print('dich', l, r, (r-l)/2, current_pos-delta, current_pos+delta, f(current_pos-delta), f(current_pos+delta))
-    if r - l < 2 * eps:
-        return current_pos
-    if l_value < r_value:
-        return dichotomia_min(l, current_pos + delta, f)
-    else:
-        return dichotomia_min(current_pos - delta, r, f)
-
-
 def f1(_a, _b):
     ans = 0
     for i in range(0, 5):
@@ -38,11 +26,31 @@ def f1(_a, _b):
     return ans
 
 
+def f1_back(_a, _b):
+    return f1(_b, _a)
+
+
+def f2_back(_a, _b):
+    return f2(_b, _a)
+
+
+def f_v_a(alpha, _a, _b):
+    return f1(a - alpha * der1a(_a, _b), b)
+
+
+def f_v_b(alpha, _a, _b):
+    return f1(a, b - alpha * der1b(_a, _b))
+
+
 def f2(_a, _b):
     ans = 0
     for i in range(5):
         ans += abs(_a*x[i] + _b - y[i])
     return ans
+
+
+ph = (1 + math.sqrt(5))/2
+
 
 # Строим сетку в интервале от -10 до 10 с шагом 0.01 по обоим координатам
 def makeData(f):
@@ -77,6 +85,47 @@ def gradient(_a, _b, f, alpha):
     return gradient(a1, b1, f, alpha)
 
 
+def gradient_const_step(_a, _b, f, alpha):
+    print(_a, _b, alpha, f(_a, _b))
+    a1 = _a - alpha*der1a(_a, _b)
+    b1 = _b - alpha*der1b(_a, _b)
+    # критерий останова
+    if (abs(der1a(_a, _b)) <= eps) and (abs(der1b(_a, _b)) <= eps):
+        return _a, _b
+    return gradient_const_step(a1, b1, f, alpha)
+
+
+def gradient_fastest(_a, _b, f):
+    res_a = minimize(f_v_a, 0.5, args=(_a, _b))
+    alpha_a = res_a.x[0]
+    res_b = minimize(f_v_b, 0.5, args=(_a, _b))
+    alpha_b = res_b.x[0]
+    print(_a, _b, f(_a, _b), alpha_a, alpha_b)
+
+    a1 = _a - alpha_a*der1a(_a, _b)
+    b1 = _b - alpha_b*der1b(_a, _b)
+    # критерий останова
+    if abs(f(a1, b1)-f(_a, _b)) < 10*eps:
+        return _a, _b
+    return gradient_fastest(a1, b1, f)
+
+
+def coord_spusk(_a, _b, f, f_back, flag):
+    a_old = _a
+    b_old = _b
+    if flag == 1:
+        res = minimize(f, 0, args=(b_old))
+        _a = res.x[0]
+    else:
+        res = minimize(f_back, 0, args=(a_old))
+        _b = res.x[0]
+    if abs(_a-a_old) < eps and abs(_b-b_old) < eps:
+        return _a, _b
+    else:
+        flag *= -1
+        return coord_spusk(_a, _b, f, f_back, flag)
+
+
 def show_graf(f):
     fig = pylab.figure()
     axes = Axes3D(fig)
@@ -88,5 +137,9 @@ def show_graf(f):
 
 show_graf(f1)
 show_graf(f2)
-print(gradient(a, b, f1, 1))
+print(coord_spusk(0, 0, f1, f1_back, 1), "spusk1")
+print(coord_spusk(0, 0, f2, f2_back, 1), "spusk2")
+print(gradient(0, 0, f1, 1),"grad")
+print(gradient_const_step(0, 0, f1, 0.015625), "const")
+print(gradient_fastest(-1.001, -3.001, f1), "fast")
 

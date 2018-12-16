@@ -1,7 +1,7 @@
 from polynom.poly_logic import read_poly
 from polynom.poly_logic import diff
 from polynom.poly_logic import poly2str
-s = '1+x^9+x^10'
+s = '4x^1+0x'
 polynom = read_poly(s)
 print(polynom)
 print(diff(polynom))

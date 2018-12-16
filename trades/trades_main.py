@@ -1,6 +1,6 @@
 import trades.trades_logic as logic
 
-transactions, market_list = logic.initArr('test_trade.csv')
+transactions, market_list = logic.initArr('trades.csv')
 
 main_window_start, main_window_len, main_window_sum, main_window_start_time\
     = logic.longest_window(transactions)
