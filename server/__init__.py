@@ -33,14 +33,19 @@ def handle_client(client):  # аргумент - сокет клиента
             msg_string = msg.decode("utf8")
             if re.fullmatch(r"/ls\s\S*\s.*", msg_string):
 
-                nickname = re.findall(r"/ls\s\S*", msg_string)[0][4:]
-
-                ls_message = re.findall(r"(\S*\s)", msg_string)
+                words = msg_string.split(" ")
+                nickname = words[1]
                 ls_message_string = ''
 
-                for i in range(2, len(ls_message)):
-                    ls_message_string += ls_message[i]
-                
+                for i in range(2, len(words)):
+                    ls_message_string += words[i] + ' '
+
+                for key, value in clients.items():  # key - socket, value - nick
+                    if value == nickname:
+                        key.send(bytes("Private message from " + name + ": "
+                                       + ls_message_string, "utf8"))
+                        # отправляем сообщение адресату
+
                 print(ls_message_string)
             else:
                 broadcast(msg, name + ": ")
