@@ -27,6 +27,7 @@ def on_closing(event=None):
     my_msg.set("{quit}")
     send()
 
+
 top = tkinter.Tk()
 top.title("Чатик")
 

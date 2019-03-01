@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+</head>
+<body>
+    
+    <table border=2px>
+        <tr>
+            <th>Имя</th>
+            <th>Фамилия</th>
+            <th>Дата</th>
+            <th>Сумма</th>
+        </tr>
+        {% for i in range(n)%}
+        <tr>
+            <td>{{arr[i][0]}}</td>
+            <td>{{arr[i][1]}}</td>
+            <td>{{arr[i][2]}}</td>
+            <td>{{arr[i][3]}}</td>
+        </tr>
+        {% endfor%}
+    </table>
+
+    
+</body>
+</html>
